@@ -14,8 +14,11 @@ class NetInterface(BaseModel):
     ip_interfaces: list[IPv4Interface]  # TODO: work on IPv6
     mac: Optional[str]
 
+    _dummy_mac = "00:00:00:00:00:00"
+
     @classmethod
     def from_psutil_snicaddr(cls, name: str, addr_data: list[snicaddr]) -> NetInterface:
+        """Makes a NetInterface object from psutil.net_if_addrs() element."""
         if_args = {
             "name": name,
             "ip_interfaces": [
@@ -29,3 +32,7 @@ class NetInterface(BaseModel):
         ]:
             if_args["mac"] = macs[0]
         return cls(**if_args)
+
+    def scan_usable(self) -> bool:
+        """Checks if interface fits for scanning."""
+        return bool(self.mac) and self.ip_interfaces and self.mac != self._dummy_mac
