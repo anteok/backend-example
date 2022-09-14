@@ -1,5 +1,5 @@
 from __future__ import annotations
-from ipaddress import IPv4Address, IPv4Interface
+from ipaddress import IPv4Interface
 from socket import AddressFamily
 from typing import Optional
 
@@ -35,4 +35,6 @@ class NetInterface(BaseModel):
 
     def scan_usable(self) -> bool:
         """Checks if interface fits for scanning."""
-        return bool(self.mac) and self.ip_interfaces and self.mac != self._dummy_mac
+        return (
+            bool(self.mac) and bool(self.ip_interfaces) and self.mac != self._dummy_mac
+        )

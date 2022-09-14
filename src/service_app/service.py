@@ -1,12 +1,12 @@
 from aiohttp import web
-from dependency_injector.containers import Container
 
+from service_app.tools.containers import MainContainer
 from src.service_app.routes import get_routes
 
 
 def create_app() -> web.Application:
     app = web.Application()
-    app.container = Container()
+    app.container = MainContainer()
     app.add_routes(get_routes())
     return app
 

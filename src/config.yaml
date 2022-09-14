@@ -1,0 +1,5 @@
+service_app:
+  connections:
+    postgres:
+      url: "postgresql+asyncpg://device-manager:someshit@0.0.0.0:5433/device-manager"
+      max_connections: 20
